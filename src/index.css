@@ -4,51 +4,51 @@
 
 @layer base {
   :root, html:not(.dark) {
-    /* macOS Light Mode Variables (Raw RGB) */
-    --color-surface: 255 255 255;
+    /* Stitch Luminous Ether Variables (Raw RGB) */
+    --color-surface: 247 249 251;
     --color-surface-bright: 255 255 255;
-    --color-surface-container: 232 232 237;
-    --color-on-surface: 29 29 31;
-    --color-on-surface-variant: 134 134 139;
-    --color-outline: 210 210 215;
-    --color-outline-variant: 229 229 234;
+    --color-surface-container: 236 238 240;
+    --color-on-surface: 25 28 30;
+    --color-on-surface-variant: 60 74 69;
+    --color-outline: 108 122 117;
+    --color-outline-variant: 187 202 195;
     
-    --color-primary: 0 102 204;
+    --color-primary: 0 194 160; /* #00c2a0 */
     --color-on-primary: 255 255 255;
-    --color-primary-container: 204 224 255;
-    --color-on-primary-container: 0 51 102;
+    --color-primary-container: 0 107 87;
+    --color-on-primary-container: 255 255 255;
     
-    --color-secondary: 94 92 230;
+    --color-secondary: 16 185 129; /* #10b981 */
     --color-on-secondary: 255 255 255;
-    --color-secondary-container: 230 230 255;
-    --color-on-secondary-container: 43 43 128;
+    --color-secondary-container: 108 248 187; 
+    --color-on-secondary-container: 0 113 77;
     
-    --color-background: 220 220 225;
-    --color-on-background: 29 29 31;
+    --color-background: 247 249 251;
+    --color-on-background: 25 28 30;
   }
 
   html.dark {
-    /* macOS Dark Mode Variables (Raw RGB) */
-    --color-surface: 44 44 46;
-    --color-surface-bright: 58 58 60;
-    --color-surface-container: 28 28 30;
-    --color-on-surface: 255 255 255;
-    --color-on-surface-variant: 152 152 157;
-    --color-outline: 56 56 58;
-    --color-outline-variant: 44 44 46;
+    /* Stitch Luminous Cybernetics Variables (Raw RGB) */
+    --color-surface: 13 21 19;
+    --color-surface-bright: 50 59 56;
+    --color-surface-container: 25 33 31;
+    --color-on-surface: 219 229 224;
+    --color-on-surface-variant: 185 202 196;
+    --color-outline: 131 148 143;
+    --color-outline-variant: 58 74 70;
     
-    --color-primary: 10 132 255;
-    --color-on-primary: 255 255 255;
-    --color-primary-container: 0 64 221;
-    --color-on-primary-container: 255 255 255;
+    --color-primary: 0 245 212; /* #00f5d4 */
+    --color-on-primary: 0 56 47;
+    --color-primary-container: 38 254 220;
+    --color-on-primary-container: 0 32 26;
     
-    --color-secondary: 94 92 230;
-    --color-on-secondary: 255 255 255;
-    --color-secondary-container: 54 52 163;
-    --color-on-secondary-container: 255 255 255;
+    --color-secondary: 254 121 192; /* #fe79c0 */
+    --color-on-secondary: 61 0 39;
+    --color-secondary-container: 134 18 91;
+    --color-on-secondary-container: 255 146 201;
     
-    --color-background: 28 28 30;
-    --color-on-background: 255 255 255;
+    --color-background: 13 21 19;
+    --color-on-background: 219 229 224;
   }
 
   body {
