@@ -135,14 +135,14 @@ export default function MissionsTab() {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
-            className="w-full h-full overflow-y-auto p-8 max-w-4xl mx-auto"
+            className="w-full h-full overflow-y-auto p-4 sm:p-8 max-w-4xl mx-auto"
           >
-            <div className="mb-8">
-              <h2 className="text-3xl font-label font-bold text-on-surface flex items-center gap-3">
-                <Target className="text-primary" size={32} />
+            <div className="mb-6 sm:mb-8">
+              <h2 className="text-2xl sm:text-3xl font-label font-bold text-on-surface flex items-center gap-3">
+                <Target className="text-primary" size={window.innerWidth < 640 ? 28 : 32} />
                 Mission Control
               </h2>
-              <p className="text-on-surface-variant mt-2">Complete guided scenarios to earn your Git wings.</p>
+              <p className="text-sm sm:text-base text-on-surface-variant mt-2">Complete guided scenarios to earn your Git wings.</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -198,7 +198,7 @@ export default function MissionsTab() {
             className="w-full h-full flex flex-col md:flex-row overflow-hidden"
           >
             {/* Left: Mission Steps (Auto-verifying) */}
-            <div className="w-full md:w-80 shrink-0 border-r border-outline-variant bg-surface/50 flex flex-col h-full z-10 shadow-lg">
+            <div className="w-full md:w-80 h-[40%] md:h-full shrink-0 border-b md:border-b-0 md:border-r border-outline-variant bg-surface/50 flex flex-col z-10 shadow-lg">
               <div className="p-4 border-b border-outline-variant/50 flex items-center gap-3">
                 <button 
                   onClick={() => setActiveMissionId(null)}
@@ -246,8 +246,8 @@ export default function MissionsTab() {
             </div>
 
             {/* Right: Interactive Terminal */}
-            <div className="flex-grow h-full bg-background relative flex flex-col min-w-0">
-              <div className="bg-primary/10 text-primary py-2 px-4 text-xs font-label tracking-widest uppercase border-b border-primary/20 text-center font-bold shrink-0">
+            <div className="flex-grow h-[60%] md:h-full bg-background relative flex flex-col min-w-0">
+              <div className="bg-primary/10 text-primary py-1.5 md:py-2 px-4 text-[10px] md:text-xs font-label tracking-widest uppercase border-b border-primary/20 text-center font-bold shrink-0">
                 Mission Execution Environment
               </div>
               <div className="flex-grow relative h-full">

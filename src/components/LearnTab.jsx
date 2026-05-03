@@ -289,30 +289,30 @@ export default function LearnTab() {
   return (
     <div className="w-full h-full flex flex-col md:flex-row bg-background">
       {/* Topics Sidebar */}
-      <div className="w-full md:w-64 shrink-0 bg-surface/30 border-r border-outline-variant overflow-y-auto">
-        <div className="p-4 border-b border-outline-variant/50">
+      <div className="w-full md:w-64 shrink-0 bg-surface/30 border-b md:border-b-0 md:border-r border-outline-variant overflow-x-auto md:overflow-y-auto no-scrollbar">
+        <div className="p-4 border-b border-outline-variant/50 hidden md:block">
           <h3 className="text-xs font-label uppercase tracking-widest text-primary font-bold">Topics</h3>
         </div>
-        <div className="flex flex-col p-2 gap-1">
+        <div className="flex flex-row md:flex-col p-2 gap-1 min-w-max md:min-w-0">
           {topics.map(topic => (
             <button
               key={topic.id}
               onClick={() => setActiveTopicId(topic.id)}
-              className={`flex items-center gap-3 px-3 py-3 rounded-lg text-left transition-all ${
+              className={`flex items-center gap-2 md:gap-3 px-4 md:px-3 py-2.5 md:py-3 rounded-lg text-left transition-all whitespace-nowrap ${
                 activeTopicId === topic.id 
                   ? 'bg-primary/10 text-primary font-bold shadow-sm'
                   : 'text-on-surface-variant hover:bg-surface-container hover:text-on-surface'
               }`}
             >
-              <topic.icon size={16} />
-              <span className="font-label text-sm">{topic.title}</span>
+              <topic.icon size={window.innerWidth < 768 ? 14 : 16} />
+              <span className="font-label text-[11px] md:text-sm">{topic.title}</span>
             </button>
           ))}
         </div>
       </div>
 
       {/* Content Area */}
-      <div className="flex-grow overflow-y-auto p-8 relative">
+      <div className="flex-grow overflow-y-auto p-4 sm:p-8 relative">
         <div className="max-w-2xl mx-auto">
           <AnimatePresence mode="wait">
             <motion.div
@@ -325,16 +325,16 @@ export default function LearnTab() {
               <activeTopic.content />
               
               {/* Call to action */}
-              <div className="mt-12 p-6 bg-surface-bright border border-outline-variant rounded-xl flex items-center justify-between">
+              <div className="mt-12 p-6 bg-surface-bright border border-outline-variant rounded-xl flex flex-col sm:items-center sm:flex-row justify-between gap-6">
                 <div>
-                  <h4 className="font-bold text-on-surface">Ready to practice?</h4>
-                  <p className="text-sm text-on-surface-variant">Try out these concepts in the Sandbox or guided Missions.</p>
+                  <h4 className="font-bold text-on-surface text-center sm:text-left">Ready to practice?</h4>
+                  <p className="text-sm text-on-surface-variant text-center sm:text-left">Try out these concepts in the Sandbox or guided Missions.</p>
                 </div>
-                <div className="flex gap-3">
-                  <button onClick={() => setActiveTab('sandbox')} className="px-4 py-2 bg-surface text-on-surface text-sm font-label rounded-lg border border-outline-variant hover:border-primary transition-colors">
+                <div className="flex gap-3 justify-center w-full sm:w-auto">
+                  <button onClick={() => setActiveTab('sandbox')} className="flex-1 sm:flex-none px-6 py-2.5 bg-surface text-on-surface text-sm font-label rounded-lg border border-outline-variant hover:border-primary transition-colors">
                     Sandbox
                   </button>
-                  <button onClick={() => setActiveTab('missions')} className="px-4 py-2 bg-primary text-on-primary text-sm font-label rounded-lg font-bold shadow-lg shadow-primary/20 hover:bg-primary-container hover:text-on-primary-container transition-colors">
+                  <button onClick={() => setActiveTab('missions')} className="flex-1 sm:flex-none px-6 py-2.5 bg-primary text-on-primary text-sm font-label rounded-lg font-bold shadow-lg shadow-primary/20 hover:bg-primary-container hover:text-on-primary-container transition-colors">
                     Missions
                   </button>
                 </div>

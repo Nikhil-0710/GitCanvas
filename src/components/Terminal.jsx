@@ -136,7 +136,7 @@ export default function Terminal() {
             <div className="w-3 h-3 rounded-full bg-[#ffbd44]"></div>
             <div className="w-3 h-3 rounded-full bg-[#00ca4e]"></div>
           </div>
-          <div className="flex items-center gap-2 text-[#888] text-xs font-sans tracking-wide px-2 border-l border-[#333]">
+          <div className="flex items-center gap-2 text-[#888] text-xs font-sans tracking-wide px-2 border-l border-[#333] hidden sm:flex">
             <TerminalIcon size={14} />
             <span>bash — git-sandbox</span>
           </div>
@@ -160,19 +160,19 @@ export default function Terminal() {
           )}
           <button 
             onClick={() => { resetStore(); clearTerminal(); }}
-            className="flex items-center gap-1 text-[#ff605c] hover:bg-[#ff605c]/10 px-2 py-0.5 rounded transition-colors ml-2"
+            className="flex items-center gap-1 text-[#ff605c] hover:bg-[#ff605c]/10 px-2 py-0.5 rounded transition-colors ml-1 sm:ml-2"
             title="Hard Reset Sandbox"
           >
             <RotateCcw size={12} />
-            <span>Reset Env</span>
+            <span className="hidden sm:inline">Reset Env</span>
           </button>
         </div>
       </div>
       
       {/* Terminal Output */}
-      <div className="flex-grow overflow-y-auto flex flex-col gap-1 p-4 pb-0 custom-scrollbar">
+      <div className="flex-grow overflow-y-auto flex flex-col gap-1 p-3 sm:p-4 pb-0 custom-scrollbar text-xs sm:text-sm">
         {terminalOutput.length === 0 && (
-          <div className="text-[#666] italic text-xs mb-2">
+          <div className="text-[#666] italic text-[10px] sm:text-xs mb-2">
             Welcome to GitCanvas Sandbox. Try typing `git init` to begin, or use the Learn/Missions tabs.
           </div>
         )}

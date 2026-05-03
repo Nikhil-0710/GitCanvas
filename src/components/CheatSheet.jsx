@@ -144,7 +144,7 @@ const SyntaxHighlightedCmd = ({ cmd }) => {
   );
 };
 
-export default function CheatSheet() {
+export default function CheatSheet({ onCommandClick }) {
   const { triggerCommand, setActiveTab } = useGitStore();
   const [search, setSearch] = useState('');
   const [copiedId, setCopiedId] = useState(null);
@@ -163,6 +163,7 @@ export default function CheatSheet() {
     const cleanCmd = cmd.replace(/\[|\]|"/g, '');
     setActiveTab('sandbox');
     triggerCommand(cleanCmd);
+    if (onCommandClick) onCommandClick();
   };
 
   const toggleSection = (title) => {
@@ -257,7 +258,10 @@ export default function CheatSheet() {
                     {section.commands.map(cmdObj => (
                       <div 
                         key={cmdObj.cmd} 
-                        onClick={() => setSelectedCommand(cmdObj)}
+                        onClick={() => {
+                          setSelectedCommand(cmdObj);
+                          if (onCommandClick) onCommandClick();
+                        }}
                         className="group relative flex flex-col p-2.5 rounded border border-transparent hover:border-outline-variant/50 hover:bg-surface-container/50 hover:shadow-sm transition-all cursor-pointer"
                       >
                         <SyntaxHighlightedCmd cmd={cmdObj.cmd} />

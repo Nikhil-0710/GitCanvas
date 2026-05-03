@@ -5,11 +5,12 @@ import Visualizer from './Visualizer';
 import CheatSheet from './CheatSheet';
 import LearnTab from './LearnTab';
 import MissionsTab from './MissionsTab';
-import { Github, Sun, Moon, BookOpen, Target, TerminalSquare } from 'lucide-react';
+import { Github, Sun, Moon, BookOpen, Target, TerminalSquare, Menu, X as CloseIcon } from 'lucide-react';
 import useGitStore from '../store/useGitStore';
 
 export default function Layout() {
   const { activeTab, setActiveTab } = useGitStore();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   
   // Theme initialization from localStorage (default dark)
   const [isDark, setIsDark] = useState(() => {
@@ -42,16 +43,24 @@ export default function Layout() {
   return (
     <div className="flex flex-col h-screen w-screen overflow-hidden bg-background transition-colors duration-500">
       {/* Top Navbar */}
-      <div className="flex items-center px-4 py-3 bg-surface border-b border-outline-variant/50 z-20 shrink-0 shadow-sm">
-        {/* macOS Window Controls */}
-        <div className="flex items-center gap-2 mr-6 px-2">
+      <div className="flex items-center px-4 py-3 bg-surface border-b border-outline-variant/50 z-30 shrink-0 shadow-sm">
+        {/* Mobile Menu Toggle */}
+        <button 
+          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+          className="md:hidden p-2 mr-2 rounded-lg bg-surface-container text-on-surface hover:text-primary transition-colors border border-outline-variant/50"
+        >
+          {isSidebarOpen ? <CloseIcon size={20} /> : <Menu size={20} />}
+        </button>
+
+        {/* macOS Window Controls - Desktop only */}
+        <div className="hidden md:flex items-center gap-2 mr-6 px-2">
           <div className="w-3 h-3 rounded-full bg-[#ff605c] shadow-sm"></div>
           <div className="w-3 h-3 rounded-full bg-[#ffbd44] shadow-sm"></div>
           <div className="w-3 h-3 rounded-full bg-[#00ca4e] shadow-sm"></div>
         </div>
 
-        <Github className="text-primary-container mr-3" size={24} />
-        <h1 className="m-0 text-xl font-label tracking-wide text-primary font-bold hidden sm:block">GitCanvas</h1>
+        <Github className="text-primary-container mr-3 hidden sm:block" size={24} />
+        <h1 className="m-0 text-lg sm:text-xl font-label tracking-wide text-primary font-bold">GitCanvas</h1>
         
         {/* Global Controls */}
         <div className="ml-auto flex items-center gap-4">
@@ -66,36 +75,57 @@ export default function Layout() {
       </div>
 
       {/* Main Layout */}
-      <div className="flex flex-grow overflow-hidden flex-row">
+      <div className="flex flex-grow overflow-hidden flex-row relative">
         
-        {/* Left: Cheat Sheet Sidebar (Fixed 260px) */}
-        <div className="w-[260px] shrink-0 z-10 border-r border-outline-variant flex flex-col relative bg-surface shadow-[4px_0_15px_rgba(0,0,0,0.05)]">
-          <CheatSheet />
-        </div>
+        {/* Left: Cheat Sheet Sidebar (Fixed 260px on Desktop, Overlay on Mobile) */}
+        <AnimatePresence>
+          {/* Mobile Overlay */}
+          {isSidebarOpen && (
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsSidebarOpen(false)}
+              className="fixed inset-0 bg-background/80 backdrop-blur-sm z-40 md:hidden"
+            />
+          )}
+        </AnimatePresence>
+
+        <motion.div 
+          className={`
+            fixed md:relative inset-y-0 left-0 w-[280px] md:w-[260px] 
+            z-50 md:z-10 border-r border-outline-variant flex flex-col 
+            bg-surface shadow-[4px_0_15px_rgba(0,0,0,0.05)]
+            transform transition-transform duration-300 md:translate-x-0
+            ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+          `}
+        >
+          <CheatSheet onCommandClick={() => window.innerWidth < 768 && setIsSidebarOpen(false)} />
+        </motion.div>
         
         {/* Center: Main Content Area */}
         <div className="flex flex-col flex-grow relative bg-background overflow-hidden min-w-0">
           
           {/* Tab Navigation Header */}
           <div className="flex flex-col bg-surface/50 border-b border-outline-variant shrink-0 relative z-10 backdrop-blur-md">
-            <div className="flex px-4 pt-4 gap-2">
+            <div className="flex px-2 sm:px-4 pt-3 sm:pt-4 gap-1 sm:gap-2 overflow-x-auto no-scrollbar">
               {tabs.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-6 py-3 font-label text-sm uppercase tracking-wider rounded-t-lg transition-all ${
+                  className={`flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 font-label text-[10px] sm:text-sm uppercase tracking-wider rounded-t-lg transition-all whitespace-nowrap ${
                     activeTab === tab.id
                       ? 'bg-background text-primary border-t-2 border-primary shadow-[0_-4px_10px_rgba(0,245,212,0.1)]'
                       : 'bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-bright border-t-2 border-transparent'
                   }`}
                 >
-                  <tab.icon size={16} />
+                  <tab.icon size={window.innerWidth < 640 ? 14 : 16} />
                   {tab.label}
                 </button>
               ))}
             </div>
-            {/* Tab Subtitle Bar */}
-            <div className="px-6 py-2 bg-background border-t border-outline-variant/30 text-xs font-label text-on-surface-variant/70 tracking-wide">
+            {/* Tab Subtitle Bar - Hidden on very small screens */}
+            <div className="hidden sm:block px-6 py-2 bg-background border-t border-outline-variant/30 text-xs font-label text-on-surface-variant/70 tracking-wide">
               {activeTabObj.subtitle}
             </div>
           </div>
@@ -136,12 +166,12 @@ export default function Layout() {
                   transition={{duration: 0.3}}
                   className="absolute inset-0 flex flex-col w-full h-full"
                 >
-                  {/* Top Right: Visualizer (60% height) */}
-                  <div className="h-[60%] relative z-0 min-h-0">
+                  {/* Visualizer (Top Part) */}
+                  <div className="h-[50%] md:h-[60%] relative z-0 min-h-0">
                     <Visualizer />
                   </div>
-                  {/* Bottom Right: Terminal (40% height) */}
-                  <div className="h-[40%] relative z-10 shadow-[0_-10px_30px_rgba(0,0,0,0.1)] border-t border-outline-variant min-h-0">
+                  {/* Terminal (Bottom Part) */}
+                  <div className="h-[50%] md:h-[40%] relative z-10 shadow-[0_-10px_30px_rgba(0,0,0,0.1)] border-t border-outline-variant min-h-0 bg-surface">
                     <Terminal />
                   </div>
                 </motion.div>
