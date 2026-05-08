@@ -93,8 +93,12 @@ export default function Visualizer() {
           target: commit.id,
           type: 'smoothstep',
           animated: true,
-          style: { stroke: '#00f5d4', strokeWidth: 3 },
-          markerEnd: { type: MarkerType.ArrowClosed, color: '#00f5d4' }
+          style: { 
+            stroke: 'rgb(var(--color-primary))', 
+            strokeWidth: 3,
+            filter: 'drop-shadow(0 0 3px rgba(var(--color-primary), 0.5))'
+          },
+          markerEnd: { type: MarkerType.ArrowClosed, color: 'rgb(var(--color-primary))' }
         });
       }
 
@@ -105,8 +109,13 @@ export default function Visualizer() {
           target: commit.id,
           type: 'smoothstep',
           animated: true,
-          style: { stroke: '#fe79c0', strokeWidth: 2, strokeDasharray: '5, 5' },
-          markerEnd: { type: MarkerType.ArrowClosed, color: '#fe79c0' }
+          style: { 
+            stroke: 'rgb(var(--color-secondary))', 
+            strokeWidth: 3, 
+            strokeDasharray: '6, 4',
+            filter: 'drop-shadow(0 0 3px rgba(var(--color-secondary), 0.5))'
+          },
+          markerEnd: { type: MarkerType.ArrowClosed, color: 'rgb(var(--color-secondary))' }
         });
       }
     });
